@@ -1,5 +1,5 @@
 const inquire = require('inquirer');
-const db = require('./db/connection');
+const db = require('./config/connection');
 
 // Ask the employee what to do
 function run() {
@@ -276,13 +276,13 @@ async function updateEmployeeRole() {
     })
 
     // grab managers from employees table and store in an array
-    const employees = await db.query('SELECT * FROM employee');
+    const employeeScan = await db.query('SELECT * FROM employee');
 
     const managers = [];
 
-    for (var i = 0; i < employees.length; i++) {
-        if (employees[i].roles_id === 1) {
-            managers.push(employees[i]);
+    for (var i = 0; i < employeeScan.length; i++) {
+        if (employeeScan[i].roles_id === 1) {
+            managers.push(employeeScan[i]);
         }
     }
 

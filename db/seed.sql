@@ -4,19 +4,19 @@ VALUES  ("Accounting"),
         ("Engineering"),
         ("Operations"),
         ("Sales"),
-        ("Executive Management")
+        ("Executive Management");
 
 -- Seed initial roles
-INSERT INTO roles (title, salary, department_id)
-VALUES  ("Accounting Manager", 110000, 1),
-        ("Engineering Manager", 110000, 2),
-        ("Operations Manager", 110000, 3),
-        ("Sales Manager", 110000, 4),
-        ("Head Honcho", 500000, 5),
-        ("Accountant", 90000, 1),
-        ("Software Dev", 100000, 2),
-        ("Hardware Tech", 70000, 3),
-        ("Sales Rep", 80000, 4)
+INSERT INTO roles (id, title, salary, department_id)
+VALUES  (1, "Accounting Manager", 110000.00, 1),
+        (2, "Engineering Manager", 110000.00, 2),
+        (3, "Operations Manager", 110000.00, 3),
+        (4, "Sales Manager", 110000.00, 4),
+        (5, "Head Honcho", 500000.00, 5),
+        (6, "Accountant", 90000.00, 1),
+        (7, "Software Dev", 100000.00, 2),
+        (8, "Hardware Tech", 70000.00, 3),
+        (9, "Sales Rep", 80000.00, 4);
 
 -- Seed initial Employees
 INSERT INTO employee (first_name, last_name, roles_id, manager_id)
@@ -28,4 +28,4 @@ VALUES  ("Cathie", "Woods", 5, NULL),
         ("Dave", "Filoni", 6, 2),
         ("Katee", "Sackoff", 7, 3),
         ("Jon", "Favreau", 8, 4),
-        ("Jennifer", "Lawrence", 9, 5),
+        ("Jennifer", "Lawrence", 9, 5);
