@@ -1,5 +1,7 @@
 const inquire = require('inquirer');
 const db = require('./config/connection');
+const cTable = require('console.table');
+
 
 // Ask the employee what to do
 function run() {
@@ -49,29 +51,7 @@ function run() {
 }
 
 
-// inquire
-//     .prompt([
-//         {
-//             type: "list",
-//             name: "department_id",
-//             question: "Select a department.",
-//             choices: [
-//                 {name: "Sales", value: 1},
-//                 {name: "Accounting", value: 2}
-//             ]
-//         }    
-//     ])
-//     .then((answers) => {
-//         console.log(answers);
-//     })
 
-
-// // present user with options
-
-// db.query('SELECT * FROM employeetracker_db')
-//     .then((results) => {
-//         console.table(results);
-//     });
 
 // view all departments - READ - "SELECT * FROM [table_name]";
 async function viewAllDepartments() {
