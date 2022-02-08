@@ -25,7 +25,7 @@ function run() {
         ]).then((data) => {
             if (data.selection === "View All Departments") {
                 viewAllDepartments();
-                run();
+                // run();
             } else if (data.selection === "View All Roles") {
                 viewAllRoles();
                 run(); 
@@ -34,7 +34,7 @@ function run() {
                 run(); 
             } else if (data.selection === "Add a Department") {
                 createDepartment();
-                run();
+                // run();
             } else if (data.selection === "Add a Role") {
                 createRole();
                 run(); 
@@ -51,14 +51,14 @@ function run() {
 }
 
 
-
-
 // view all departments - READ - "SELECT * FROM [table_name]";
 async function viewAllDepartments() {
 
     const departments = await db.query('SELECT * FROM department');
 
     console.table(departments);
+    // console.log('\n');
+    run();
 
 }
 
@@ -69,6 +69,8 @@ async function viewAllRoles() {
     const roles = await db.query('SELECT * FROM roles');
 
     console.table(roles);
+    run();
+    // console.log('\n');
 
 }
 
@@ -78,21 +80,25 @@ async function viewAllEmployees() {
     const employees = await db.query('SELECT * FROM employee');
 
     console.table(employees);
+    run();
+    // console.log('\n');
 
 }
 
 // add a department - CREATE - "INSERT INTO [table_name] (col1, col2) VALUES (value1, value2)"
 
 async function createDepartment() {
+    
+    console.log("hey");
     const departmentInfo = await inquire
         .prompt([
             {
                 type: "input",
                 name: "name",
-                question: "Provide a department name."
+                message: "Provide a department name."
             }
-        ])
-        .then((data) => {
+        ]);
+        async function doThat (data) {
             const sql =`INSERT INTO department (department_name) 
                 VALUES (${data.name})`;
             const params = roleInformation;
@@ -107,7 +113,8 @@ async function createDepartment() {
                 data: body
                 });
             });
-        });
+        };
+    run();
 }
 
 // add a role - CREATE -
@@ -162,6 +169,7 @@ async function createRole() {
                 });
             });
         });
+    run();
 }
 
 // add an employee - CREATE -
@@ -227,6 +235,7 @@ async function createEmployee() {
                 });
             });
         })
+    run();
 
 }
 
@@ -304,6 +313,7 @@ async function updateEmployeeRole() {
                 });
             });
         })
+    run();
 }
 
 
