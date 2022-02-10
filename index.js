@@ -1,6 +1,7 @@
 const inquire = require('inquirer');
 const db = require('./config/connection');
 const cTable = require('console.table');
+const inquirer = require('inquirer');
 
 
 // Ask the employee what to do
@@ -89,21 +90,19 @@ async function viewAllEmployees() {
 
 async function createDepartment() {
     
-    console.log("hey");
-    const departmentInfo = await inquire
-        .prompt([
-            {
-                type: "input",
-                name: "name",
-                message: "Provide a department name."
-            }
-        ]);
-        async function doThat (data) {
-            const sql =`INSERT INTO department (department_name) 
-                VALUES (${data.name})`;
-            const params = roleInformation;
+    await inquirer.prompt([
+        {
+            name: "name",
+            message: "Provide a department name."
+        }
+    ]).then((data) => {
+
+            // console.log('I made it!')
+            const sql =("INSERT INTO department SET ?", data)
+                // VALUES (${data.name})`;
+            console.log(sql);
       
-            db.query(sql, params, (err, result) => {
+            db.query(sql, (err, result) => {
                 if (err) {
                     res.status(400).json({ error: err.message });
                     return;
@@ -112,9 +111,36 @@ async function createDepartment() {
                 message: 'success',
                 data: body
                 });
-            });
-        };
-    run();
+            }).then(() => run());
+
+    })
+    // const departmentInfo = await inquire
+    //     .prompt([
+    //         {
+    //             type: "input",
+    //             name: "name",
+    //             message: "Provide a department name."
+    //         }
+    //     ]);
+    // console.log(departmentInfo);
+    //     // function departmentUpdate(data) {
+    //     //     console.log('I made it!')
+    //     //     const sql =`INSERT INTO department (department_name) 
+    //     //         VALUES (${data.name})`;
+    //     //     const params = roleInformation;
+      
+    //     //     db.query(sql, params, (err, result) => {
+    //     //         if (err) {
+    //     //             res.status(400).json({ error: err.message });
+    //     //             return;
+    //     //         }
+    //     //         res.json({
+    //     //         message: 'success',
+    //     //         data: body
+    //     //         });
+    //     //     });
+    //     // };
+    // // departmentUpdate(data);
 }
 
 // add a role - CREATE -
