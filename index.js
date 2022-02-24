@@ -26,25 +26,18 @@ function run() {
         ]).then((data) => {
             if (data.selection === "View All Departments") {
                 viewAllDepartments();
-                // run();
             } else if (data.selection === "View All Roles") {
                 viewAllRoles();
-                run(); 
             } else if (data.selection === "View All Employees") {
                 viewAllEmployees();
-                run(); 
             } else if (data.selection === "Add a Department") {
                 createDepartment();
-                // run();
             } else if (data.selection === "Add a Role") {
                 createRole();
-                run(); 
             } else if (data.selection === "Add an Employee") {
                 createEmployee();
-                run();
             } else if (data.selection === "Update an Employee Role") {
                 updateEmployeeRole();
-                run();
             } else {
                 return;
             }
@@ -92,13 +85,14 @@ async function createDepartment() {
     
     await inquirer.prompt([
         {
+            type: "input",
             name: "name",
             message: "Provide a department name."
         }
     ]).then((data) => {
 
             // console.log('I made it!')
-            const sql =("INSERT INTO department SET ?", data)
+            const sql =(`INSERT INTO department SET ?`, data.name);
                 // VALUES (${data.name})`;
             console.log(sql);
       
@@ -152,50 +146,46 @@ async function createRole() {
 
     // .map() the reults from 'roles' to question data for inquirer
     const departmentChoices = departments.map(department => {
-        return{
+        return {
             name: department.name,
             value: department.id
         }
     })
 
     // THEN prompt the user for role information (inquirer)
-    const roleInformation = await inquire
+    inquire
         .prompt([
             {
                 type: "input",
                 name: "title",
-                question: "Provide a role title."
+                message: "Provide a role title."
             },
             {
                 type: "number",
                 name: "salary",
-                question: "Provide a salary."
+                message: "Provide a salary."
             },
             {
                 type: "list",
                 name: "department_id",
-                question: "Select a department.",
+                message: "Select a department.",
                 choices: departmentChoices
             }    
         ])
         // Take the user's answers and go INSERT them into the 'role' table
         .then((data) => {
+            console.log(data);
             const sql = `INSERT INTO roles (title, salary, department_id) 
-                VALUES (${data.title}, ${data.salary}, ${data.department_id.value})`;
-            const params = roleInformation;
-          
-            db.query(sql, params, (err, result) => {
-                if (err) {
-                res.status(400).json({ error: err.message });
-                return;
+                VALUES ("${data.title}", ${data.salary}, ${data.department_id})`;
+            db.query(sql, (err, result) => {
+                console.log('query has been hit');
+                if (err) throw err; 
+                console.log('New role added to roles.');
+                if (result) {
+                    run();
                 }
-                res.json({
-                message: 'success',
-                data: body
-                });
             });
-        });
-    run();
+        })  
 }
 
 // add an employee - CREATE -
@@ -341,6 +331,5 @@ async function updateEmployeeRole() {
         })
     run();
 }
-
 
 run();
