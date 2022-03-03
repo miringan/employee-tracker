@@ -4,7 +4,6 @@ const db = require('./config/connection');
 const cTable = require('console.table');
 const inquirer = require('inquirer');
 
-
 // Ask the employee what to do
 function run() {
     inquire
@@ -269,15 +268,12 @@ async function updateEmployeeRole() {
                 SET roles_id = ${data.role}, manager_id = ${data.manager}
                 WHERE id = ${data.employee}`;
       
-            db.query(sql, (err, result) => {
-                if (err) {
-                res.status(400).json({ error: err.message });
-                return;
-                }
-                res.json({
-                message: 'success',
-                data: body
-                });
+                db.query(sql, (err, result) => {
+                    if (err) throw err; 
+                    console.log('Employee role has been updated.');
+                    if (result) {
+                        run();
+                    }
             });
         })
     run();
